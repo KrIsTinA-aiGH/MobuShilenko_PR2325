@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "293121443267",
+    "project_id": "medicapp-b3c3e",
+    "storage_bucket": "medicapp-b3c3e.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:293121443267:android:b0b0daed74fae7d902e976",
+        "android_client_info": {
+          "package_name": "com.example.pr2325shilenko"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBytKoVRXnMY_F7VGiwxnPRnnrWtEwJV4E"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

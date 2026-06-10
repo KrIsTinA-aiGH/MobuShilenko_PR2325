@@ -12,7 +12,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.pr2325shilenko.ui.theme.Pr2325ShilenkoTheme
 
@@ -34,31 +33,40 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun AppNavigation() {
-    // Состояние для переключения экранов
     var showOnboarding by remember { mutableStateOf(true) }
+    var currentScreen by remember { mutableStateOf("login") }
 
     if (showOnboarding) {
         OnboardingScreen(onSkipClick = {
             showOnboarding = false
         })
     } else {
-
-        LoginScreenPlaceholder()
-    }
-}
-
-@Composable
-fun LoginScreenPlaceholder() {
-    Box(
-        modifier = Modifier.fillMaxSize(),
-        contentAlignment = Alignment.Center
-    ) {
-        Text(
-            text = "Экран «Вход и регистрация»",
-            fontSize = 20.sp,
-            fontWeight = FontWeight.Bold,
-            textAlign = TextAlign.Center,
-            modifier = Modifier.padding(16.dp)
-        )
+        when (currentScreen) {
+            "login" -> LoginScreen(onLoginClick = {
+                currentScreen = "email"
+            })
+            "email" -> EmailCodeScreen(onCodeVerified = {
+                currentScreen = "password"
+            })
+            "password" -> CreatePasswordScreen(onPasswordCreated = {
+                currentScreen = "card"
+            })
+            "card" -> CreateCardScreen(onCardCreated = {
+                currentScreen = "main"
+            })
+            "main" -> {
+                Box(
+                    modifier = Modifier.fillMaxSize(),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Text(
+                        text = "Главный экран",
+                        fontSize = 20.sp,
+                        fontWeight = FontWeight.Bold,
+                        textAlign = TextAlign.Center
+                    )
+                }
+            }
+        }
     }
 }
