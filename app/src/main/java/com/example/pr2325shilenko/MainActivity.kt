@@ -6,13 +6,11 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
-import androidx.compose.runtime.*
-import androidx.compose.ui.Alignment
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.unit.sp
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
 import com.example.pr2325shilenko.ui.theme.Pr2325ShilenkoTheme
 
 class MainActivity : ComponentActivity() {
@@ -33,40 +31,57 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun AppNavigation() {
-    var showOnboarding by remember { mutableStateOf(true) }
-    var currentScreen by remember { mutableStateOf("login") }
+    val navController = rememberNavController()
 
-    if (showOnboarding) {
-        OnboardingScreen(onSkipClick = {
-            showOnboarding = false
-        })
-    } else {
-        when (currentScreen) {
-            "login" -> LoginScreen(onLoginClick = {
-                currentScreen = "email"
-            })
-            "email" -> EmailCodeScreen(onCodeVerified = {
-                currentScreen = "password"
-            })
-            "password" -> CreatePasswordScreen(onPasswordCreated = {
-                currentScreen = "card"
-            })
-            "card" -> CreateCardScreen(onCardCreated = {
-                currentScreen = "main"
-            })
-            "main" -> {
-                Box(
-                    modifier = Modifier.fillMaxSize(),
-                    contentAlignment = Alignment.Center
-                ) {
-                    Text(
-                        text = "Главный экран",
-                        fontSize = 20.sp,
-                        fontWeight = FontWeight.Bold,
-                        textAlign = TextAlign.Center
-                    )
+    NavHost(
+        navController = navController,
+        startDestination = Screen.Onboarding.route
+    ) {
+        composable(Screen.Onboarding.route) {
+            OnboardingScreen(onSkipClick = {
+                navController.navigate(Screen.Login.route) {
+                    popUpTo(Screen.Onboarding.route) { inclusive = true }
                 }
-            }
+            })
+        }
+
+        composable(Screen.Login.route) {
+            LoginScreen(onLoginClick = {
+                navController.navigate(Screen.EmailCode.route)
+            })
+        }
+
+        composable(Screen.EmailCode.route) {
+            EmailCodeScreen(onCodeVerified = {
+                navController.navigate(Screen.CreatePassword.route)
+            })
+        }
+
+        composable(Screen.CreatePassword.route) {
+            CreatePasswordScreen(onPasswordCreated = {
+                navController.navigate(Screen.CreateCard.route)
+            })
+        }
+
+        composable(Screen.CreateCard.route) {
+            CreateCardScreen(onCardCreated = {
+                navController.navigate(Screen.Analyses.route) {
+                    popUpTo(Screen.Login.route) { inclusive = true }
+                }
+            })
+        }
+
+        composable(Screen.Analyses.route) {
+            MainScreenWithBottomNav(navController, startTab = 0)
+        }
+        composable(Screen.Results.route) {
+            MainScreenWithBottomNav(navController, startTab = 1)
+        }
+        composable(Screen.Support.route) {
+            MainScreenWithBottomNav(navController, startTab = 2)
+        }
+        composable(Screen.Profile.route) {
+            MainScreenWithBottomNav(navController, startTab = 3)
         }
     }
 }
