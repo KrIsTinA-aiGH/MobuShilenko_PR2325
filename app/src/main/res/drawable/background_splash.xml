@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
     <!-- Синий градиентный фон -->
     <item>
         <shape>
@@ -7,14 +8,41 @@
                 android:angle="90"
                 android:startColor="#4A90E2"
                 android:centerColor="#5B9BD5"
-                android:endColor="#7CB9E8"
+                android:endColor="#2196F3"
                 android:type="linear" />
         </shape>
     </item>
-    <!-- Логотип по центру -->
-    <item>
-        <bitmap
-            android:gravity="center"
-            android:src="@drawable/i5" />
+
+    <!-- Текст + иконка по центру -->
+    <item android:gravity="center">
+        <layer-list>
+
+            <!-- Текст "Смартлаб" -->
+            <item
+                android:width="300dp"
+                android:height="70dp"
+                android:gravity="center">
+                <text
+                    android:text="Смартлаб"
+                    android:textColor="#FFFFFF"
+                    android:textSize="40sp"
+                    android:textStyle="bold"
+                    android:fontFamily="sans-serif-medium"
+                    android:gravity="center" />
+            </item>
+
+            <!-- Иконка плюса справа от текста -->
+            <item
+                android:width="50dp"
+                android:height="50dp"
+                android:gravity="center"
+                android:left="190dp">
+                <bitmap
+                    android:src="@drawable/i5"
+                    android:gravity="center" />
+            </item>
+
+        </layer-list>
     </item>
+
 </layer-list>
